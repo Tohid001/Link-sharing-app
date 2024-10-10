@@ -1,0 +1,14 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": ["eslint:recommended", "next", "next/core-web-vitals"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "@next/next/no-img-element": "warn",
+    "@next/next/no-html-link-for-pages": "warn",
+    "react/display-name": "off"
+  }
+}

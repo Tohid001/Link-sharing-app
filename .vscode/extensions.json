@@ -1,0 +1,6 @@
+{
+	"recommendations": [
+		"formulahendry.auto-rename-tag", "dbaeumer.vscode-eslint", "pomber.git-file-history", "eamodio.gitlens", "wix.vscode-import-cost", "christian-kohler.npm-intellisense", "christian-kohler.path-intellisense", "esbenp.prettier-vscode", "formulahendry.auto-close-tag", "lokalise.i18n-ally"
+	],
+	"unwantedRecommendations": []
+}
