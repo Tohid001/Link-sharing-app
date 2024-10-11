@@ -1,5 +1,5 @@
 import { Button, Flex, Form, Input, Layout, message, notification } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormWithLogoStc, FooterStc } from '../auth.stc';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import { signIn, useSession } from 'next-auth/react';
 
 function Login() {
     const [isLoading, setIsLoading] = useState(false);
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
     const [form] = Form.useForm();
     const email = Form.useWatch('email', form);
@@ -31,6 +31,12 @@ function Login() {
             router.push('/links');
         }
     };
+
+    useEffect(() => {
+        if (status === 'authenticated') {
+            router.push('/');
+        }
+    }, [status]);
 
     return (
         <Layout.Content>

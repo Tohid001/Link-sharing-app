@@ -1,6 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
+    body{
+       margin:0;
+    }
     .ant-message{
         top: 80vh !important;
     }
