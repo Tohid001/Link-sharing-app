@@ -4,7 +4,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const ResponsiveButtonStc = styled(Button)`
-    span:nth-of-type(2) {
+    ${({ icon }) =>
+        icon &&
+        ` span:nth-of-type(2) {
         display: none;
     }
 
@@ -12,7 +14,7 @@ export const ResponsiveButtonStc = styled(Button)`
         span:nth-of-type(2) {
             display: inline-block;
         }
-    }
+    }`}
 
     ${({ type }) =>
         type === 'link' && `border: 1px solid ${antToken.colorPrimary}`};
@@ -27,9 +29,17 @@ export const ResponsiveButtonStc = styled(Button)`
         background: transparent;`};
 `;
 
-function ResponsiveButton({ icon, text, type }) {
+function ResponsiveButton({ icon, text, type, block, handleClick }) {
     return (
-        <ResponsiveButtonStc icon={icon} type={type} size="large">
+        <ResponsiveButtonStc
+            icon={icon}
+            type={type}
+            size="large"
+            block={block}
+            onClick={() => {
+                handleClick && handleClick();
+            }}
+        >
             <span>{text}</span>
         </ResponsiveButtonStc>
     );

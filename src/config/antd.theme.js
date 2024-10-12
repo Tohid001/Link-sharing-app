@@ -48,8 +48,10 @@ export const theme = {
             // colorText: '#000000E0',
         },
         Form: {
-            // controlHeightLG: 30,
+            // controlHeightLG: 40,
             // labelColor: '#FFFFFFA6',
+            labelRequiredMarkColor: '',
+            labelColor: '#737373',
         },
         Typography: {
             // colorText: '#ffffff',
