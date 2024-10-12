@@ -12,7 +12,9 @@ const withNav = (Component) => {
                         <Nav />
                     </Layout.Header>
                 </Col>
-                <Layout.Content>
+                <Layout.Content
+                    style={{ display: 'grid', gridTemplateRows: 'auto 1fr' }}
+                >
                     <Col span={24}>
                         <Component {...props} />
                     </Col>
