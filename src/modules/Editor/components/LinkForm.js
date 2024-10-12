@@ -1,8 +1,7 @@
 import DraggableLink from '@/components/DraggableLink';
 import ResponsiveButton from '@/components/ResponsiveButton';
-import { antToken } from '@/config/antd.theme';
-import { Typography, Button, Empty, Form, Space, Flex, Row, Col } from 'antd';
-import React, { useState } from 'react';
+import { Typography, Button, Empty, Form, Flex } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
@@ -10,12 +9,9 @@ import styled from 'styled-components';
 const LinkFormStc = styled(Flex)`
     min-height: 100%;
     .scrollable {
+        max-height: 467px;
         overflow-y: auto;
         overflow-x: hidden;
-
-        form {
-            max-height: 470px;
-        }
     }
 
     hr {
@@ -37,74 +33,115 @@ const LinkFormStc = styled(Flex)`
     }
 `;
 
-function LinkForm({ isSocialLinksLoading }) {
-    const [links, setLinks] = useState([{ platform: '', url: '' }]);
+function LinkForm({
+    isSocialLinksLoading,
+    initialLinks = [
+        { platform: '', url: '1' },
+        { platform: '', url: '2' },
+        { platform: '', url: '3' },
+        { platform: '', url: '4' },
+    ],
+}) {
+    const [links, setLinks] = useState(initialLinks);
     const [form] = Form.useForm();
 
+    useEffect(() => {
+        form.setFieldsValue({ links: initialLinks });
+    }, []);
+
     const addNewLink = () => {
-        setLinks([...links, { platform: '', url: '' }]);
+        const newLink = { platform: '', url: '' };
+        setLinks([...links, newLink]);
+        form.setFieldsValue({ links: [...links, newLink] });
     };
 
     const removeLink = (index) => {
-        setLinks(links.filter((_, idx) => idx !== index));
+        const updatedLinks = links.filter((_, idx) => idx !== index);
+        setLinks(updatedLinks);
+        form.setFieldsValue({ links: updatedLinks });
     };
 
     const moveLink = (dragIndex, hoverIndex) => {
-        const dragItem = links[dragIndex];
         const updatedLinks = [...links];
-        updatedLinks.splice(dragIndex, 1);
-        updatedLinks.splice(hoverIndex, 0, dragItem);
+        const draggedItem = updatedLinks.splice(dragIndex, 1)[0];
+        updatedLinks.splice(hoverIndex, 0, draggedItem);
         setLinks(updatedLinks);
+        form.setFieldsValue({ links: updatedLinks });
     };
 
-    const handleSubmit = () => {};
+    const handleSubmit = (values) => {
+        console.log('tohidDev001handleSubmit', { values });
+    };
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <LinkFormStc vertical={true} justify={'space-between'}>
-                <div className="scrollable">
-                    <Typography.Title>Customize your links</Typography.Title>
-                    <Typography.Text style={{ display: 'block' }}>
-                        Add/edit/remove links below and then share all your
-                        profiles with the world!
-                    </Typography.Text>
-                    <br></br>
-                    <br></br>
-                    <ResponsiveButton
-                        type="link"
-                        text={'+ Add New Link'}
-                        block={true}
-                        handleClick={addNewLink}
-                    />
-                    <br></br>
-                    <br></br>
-                    {!links.length ? (
-                        <Empty
-                            description={
-                                'No links available. Please add links, edit them, delete them, reorder them and share with the outer world.'
-                            }
-                        />
-                    ) : (
-                        <Form
-                            form={form}
-                            colon={false}
-                            layout={'vertical'}
-                            onFinish={handleSubmit}
-                        >
-                            <Flex vertical={true} gap={'16px'}>
-                                {links.map((link, index) => (
-                                    <DraggableLink
-                                        key={index}
-                                        index={index}
-                                        link={link}
-                                        removeLink={removeLink}
-                                        moveLink={moveLink}
-                                    />
-                                ))}
-                            </Flex>
-                        </Form>
-                    )}
-                </div>
+            <LinkFormStc
+                vertical={true}
+                // justify={'space-between'}
+            >
+                <Typography.Title>Customize your links</Typography.Title>
+                <Typography.Text style={{ display: 'block' }}>
+                    Add/edit/remove links below and then share all your profiles
+                    with the world!
+                </Typography.Text>
+                <br></br>
+                <br></br>
+                <Form
+                    form={form}
+                    colon={false}
+                    layout={'vertical'}
+                    onFinish={handleSubmit}
+                >
+                    <Form.List name="links" initialValue={[]}>
+                        {(fields) => {
+                            return (
+                                <>
+                                    <Form.Item>
+                                        <ResponsiveButton
+                                            type="link"
+                                            text={'+ Add New Link'}
+                                            block={true}
+                                            handleClick={addNewLink}
+                                        />
+                                    </Form.Item>
+
+                                    {links.length ? (
+                                        <Flex
+                                            vertical={true}
+                                            gap={'16px'}
+                                            className="scrollable"
+                                        >
+                                            {fields.map(
+                                                (
+                                                    { key, name, ...restField },
+                                                    index
+                                                ) => (
+                                                    <DraggableLink
+                                                        key={index}
+                                                        index={index}
+                                                        name={name}
+                                                        link={{}}
+                                                        removeLink={() =>
+                                                            removeLink(index)
+                                                        }
+                                                        moveLink={moveLink}
+                                                        restField={restField}
+                                                    />
+                                                )
+                                            )}
+                                        </Flex>
+                                    ) : (
+                                        <Empty
+                                            description={
+                                                'No links available. Please add links, edit them, delete them, reorder them and share with the outer world.'
+                                            }
+                                        />
+                                    )}
+                                </>
+                            );
+                        }}
+                    </Form.List>
+                </Form>
                 <br></br>
                 {links.length ? (
                     <div className="footer">

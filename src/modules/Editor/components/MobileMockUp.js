@@ -13,7 +13,7 @@ const MobileMockUpStc = styled.div`
 
     .mobile-container {
         width: 100%;
-        height: 632px;
+        height: 600px;
         border: inherit;
         border-radius: inherit;
         position: relative;

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 const ItemType = 'LINK';
 
 const DraggableLinkStc = styled.div`
+    cursor: ${({ isDragging }) => (isDragging ? 'grabbing' : 'grab')};
     opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
     padding: 16px;
     background: ${antToken.colorBgLayout};
@@ -18,17 +19,47 @@ const DraggableLinkStc = styled.div`
     max-height: 235px;
 `;
 
-const DraggableLink = ({ link, index, removeLink, moveLink }) => {
+const DraggableLink = ({
+    link,
+    index,
+    name,
+    removeLink,
+    moveLink,
+    restField,
+}) => {
     const ref = React.useRef(null);
 
-    const [, drop] = useDrop({
+    const [{ handlerId }, drop] = useDrop({
         accept: ItemType,
-        hover(item) {
+        collect(monitor) {
+            return {
+                handlerId: monitor.getHandlerId(),
+            };
+        },
+        hover(item, monitor) {
             if (!ref.current) return;
             const dragIndex = item.index;
             const hoverIndex = index;
             if (dragIndex === hoverIndex) return;
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+            const clientOffset = monitor.getClientOffset();
+
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return;
+            }
+
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return;
+            }
+
             moveLink(dragIndex, hoverIndex);
+
             item.index = hoverIndex;
         },
     });
@@ -44,7 +75,11 @@ const DraggableLink = ({ link, index, removeLink, moveLink }) => {
     drag(drop(ref));
 
     return (
-        <DraggableLinkStc ref={ref} isDragging={isDragging}>
+        <DraggableLinkStc
+            ref={ref}
+            data-handler-id={handlerId}
+            isDragging={isDragging}
+        >
             <Flex justify={'space-between'} align="center">
                 <Typography.Title
                     level={5}
@@ -57,15 +92,35 @@ const DraggableLink = ({ link, index, removeLink, moveLink }) => {
                     Remove
                 </Button>
             </Flex>
-            <Form.Item label={`Platform`}>
-                <Select placeholder="Select Platform" value={link.platform}>
+            <Form.Item
+                {...restField}
+                label={`Platform`}
+                name={[name, 'platform']}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Missing platform',
+                    },
+                ]}
+            >
+                <Select placeholder="Select Platform">
                     <Select.Option value="GitHub">GitHub</Select.Option>
                     <Select.Option value="YouTube">YouTube</Select.Option>
                 </Select>
             </Form.Item>
 
-            <Form.Item label={`Link`}>
-                <Input placeholder="Enter URL" value={link.link} />
+            <Form.Item
+                {...restField}
+                label={`Link`}
+                name={[name, 'url']}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Missing url',
+                    },
+                ]}
+            >
+                <Input placeholder="Enter URL" />
             </Form.Item>
         </DraggableLinkStc>
     );
