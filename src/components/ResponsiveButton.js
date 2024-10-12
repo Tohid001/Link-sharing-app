@@ -8,7 +8,7 @@ export const ResponsiveButtonStc = styled(Button)`
         display: none;
     }
 
-    @media (min-width: 376px) {
+    @media (min-width: 768px) {
         span:nth-of-type(2) {
             display: inline-block;
         }

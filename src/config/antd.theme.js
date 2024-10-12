@@ -10,6 +10,7 @@ export const theme = {
         colorBgContainer: '#FFFFFF',
         // colorTextLightSolid: '#FFFFFF',
         colorText: '#737373',
+        colorTextHeading: '#333333',
         // colorBgSpotlight: '#000000D9',
         fontSizeSM: 14,
         fontSizeHeading2: 30,

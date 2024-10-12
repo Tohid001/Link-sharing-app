@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
+import Logo from '@/modules/Editor/components/Logo';
 
 function Login() {
     const [isLoading, setIsLoading] = useState(false);
@@ -46,15 +47,7 @@ function Login() {
                 vertical={true}
                 style={{ minHeight: '100vh' }}
             >
-                <Flex justify="center">
-                    <Image
-                        src="/assets/logo.png"
-                        alt="Logo"
-                        width={256}
-                        height={62}
-                        priority={true}
-                    />
-                </Flex>
+                <Logo responsive={false} />
 
                 <FormWithLogoStc>
                     <Form

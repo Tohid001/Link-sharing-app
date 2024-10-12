@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                                 style={{
                                     minHeight: '100vh',
                                     overflow: 'scroll',
+                                    padding: '1rem',
                                 }}
                             >
                                 <Component {...pageProps} />

@@ -5,7 +5,7 @@ const withNav = (Component) => {
     const withNav = (props) => {
         return (
             <>
-                <Layout.Header>
+                <Layout.Header style={{ borderRadius: '10px' }}>
                     <Nav />
                 </Layout.Header>
 

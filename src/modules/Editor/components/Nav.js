@@ -8,17 +8,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Button, Flex, Tooltip } from 'antd';
 import ResponsiveButton from '@/components/ResponsiveButton';
+import Logo from './Logo';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import styled from 'styled-components';
-
-const LogoStc = styled.div`
-    background: url('../../../../public/assets/logo.png') no-repeat;
-    display: block;
-    height: 40px;
-    width: 183px;
-`;
 
 function Nav() {
     const router = useRouter();
@@ -26,7 +19,7 @@ function Nav() {
 
     return (
         <Flex align="center" justify="space-between">
-            <LogoStc />
+            <Logo />
             <Flex align="center" justify="center">
                 <Link href={`/links`}>
                     <ResponsiveButton
