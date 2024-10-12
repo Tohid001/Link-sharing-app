@@ -1,21 +1,34 @@
-import { getSession } from 'next-auth/react';
+import { verify } from 'jsonwebtoken';
 import User from '../../../models/userSchema';
 import dataBaseConnection from '@/lib/database';
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).end();
 
-    const session = await getSession({ req });
-    if (!session) return res.status(401).json({ error: 'Not authenticated' });
-
-    await dataBaseConnection();
-    const { platform, url } = req.body;
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res
+            .status(401)
+            .json({ error: 'Missing or invalid Authorization header' });
+    }
+    const token = authHeader.split(' ')[1];
 
     try {
-        const user = await User.findOne({ email: session.user.email });
+        const decoded = verify(token, JWT_SECRET);
+
+        await dataBaseConnection();
+        const { links } = req.body;
+
+        if (!Array.isArray(links)) {
+            return res.status(400).json({ error: 'Invalid input format' });
+        }
+
+        const user = await User.findById(decoded.userId);
         if (!user) return res.status(404).json({ error: 'User not found' });
 
-        user.socialLinks.push({ platform, url });
+        user.socialLinks = links;
         await user.save();
 
         return res.status(200).json({
@@ -23,6 +36,7 @@ export default async function handler(req, res) {
             success: true,
         });
     } catch (error) {
-        return res.status(500).json({ error: 'Failed to add social link' });
+        console.error('Error:', error);
+        return res.status(401).json({ error: 'Invalid token' });
     }
 }

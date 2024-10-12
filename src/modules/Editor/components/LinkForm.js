@@ -1,3 +1,4 @@
+import { useCreateSocialLinks } from '@/app/queries/links.query';
 import DraggableLink from '@/components/DraggableLink';
 import ResponsiveButton from '@/components/ResponsiveButton';
 import { Typography, Button, Empty, Form, Flex } from 'antd';
@@ -35,15 +36,11 @@ const LinkFormStc = styled(Flex)`
 
 function LinkForm({
     isSocialLinksLoading,
-    initialLinks = [
-        { platform: '', url: '1' },
-        { platform: '', url: '2' },
-        { platform: '', url: '3' },
-        { platform: '', url: '4' },
-    ],
+    initialLinks = [{ platform: '', url: '1' }],
 }) {
     const [links, setLinks] = useState(initialLinks);
     const [form] = Form.useForm();
+    const { mutate: saveLinks, isPending } = useCreateSocialLinks();
 
     useEffect(() => {
         form.setFieldsValue({ links: initialLinks });
@@ -69,16 +66,13 @@ function LinkForm({
         form.setFieldsValue({ links: updatedLinks });
     };
 
-    const handleSubmit = (values) => {
-        console.log('tohidDev001handleSubmit', { values });
+    const handleSubmit = ({ links }) => {
+        saveLinks(links);
     };
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <LinkFormStc
-                vertical={true}
-                // justify={'space-between'}
-            >
+            <LinkFormStc vertical={true}>
                 <Typography.Title>Customize your links</Typography.Title>
                 <Typography.Text style={{ display: 'block' }}>
                     Add/edit/remove links below and then share all your profiles
@@ -148,6 +142,7 @@ function LinkForm({
                         <hr></hr>
                         <Button
                             type="primary"
+                            loading={isPending}
                             size="large"
                             onClick={() => {
                                 form.submit();

@@ -103,7 +103,7 @@ const DraggableLink = ({
                     },
                 ]}
             >
-                <Select placeholder="Select Platform">
+                <Select placeholder="Select Platform" size="large">
                     <Select.Option value="GitHub">GitHub</Select.Option>
                     <Select.Option value="YouTube">YouTube</Select.Option>
                 </Select>
@@ -120,7 +120,7 @@ const DraggableLink = ({
                     },
                 ]}
             >
-                <Input placeholder="Enter URL" />
+                <Input placeholder="Enter URL" size="large" />
             </Form.Item>
         </DraggableLinkStc>
     );

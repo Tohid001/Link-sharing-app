@@ -1,56 +1,33 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
-    createSocialLink,
-    deleteSocialLink,
-    updateSocialLink,
-    reorderSocialLinks,
+    createSocialLinks,
     fetchSocialLinks,
 } from '../services/links.services';
+import { useSession } from 'next-auth/react';
+import { message } from 'antd';
 
 export const useFetchSocialLinks = () => {
+    const { data: session } = useSession();
     return useQuery({
         queryKey: ['socialLinks'],
-        queryFn: fetchSocialLinks,
+        queryFn: () => fetchSocialLinks(session?.accessToken),
     });
 };
 
-export const useCreateSocialLink = () => {
+export const useCreateSocialLinks = () => {
     const queryClient = useQueryClient();
+    const { data: session } = useSession();
 
-    return useMutation(createSocialLink, {
+    return useMutation({
+        mutationFn: (newLinks) =>
+            createSocialLinks(newLinks, session?.accessToken),
         onSuccess: () => {
             queryClient.invalidateQueries('socialLinks');
+            message.success('Your changes have been successfully saved!');
         },
-    });
-};
-
-export const useDeleteSocialLink = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation(deleteSocialLink, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('socialLinks');
-        },
-    });
-};
-
-export const useUpdateSocialLink = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation(updateSocialLink, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('socialLinks');
-        },
-    });
-};
-
-export const useReorderSocialLinks = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation(reorderSocialLinks, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('socialLinks');
+        onError: (error) => {
+            message.error(error.response.data.error);
         },
     });
 };
