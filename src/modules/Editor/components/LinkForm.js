@@ -8,7 +8,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 
-const LinkFormStc = styled(Flex)`
+export const LinkFormStc = styled(Flex)`
     min-height: 100%;
     .scrollable {
         max-height: 467px;
@@ -35,16 +35,16 @@ const LinkFormStc = styled(Flex)`
     }
 `;
 
-function LinkForm({ isLoading, links, setLinks }) {
+function LinkForm({ isSocialLinksLoading, links, setLinks }) {
     const [form] = Form.useForm();
     const { mutate: saveLinks, isPending: isSavingLinks } =
         useCreateSocialLinks();
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isSocialLinksLoading) {
             form.setFieldsValue({ links });
         }
-    }, [isLoading, links]);
+    }, [isSocialLinksLoading, links]);
 
     const addNewLink = () => {
         const newLink = { platform: 'github', url: '' };
@@ -108,12 +108,13 @@ function LinkForm({ isLoading, links, setLinks }) {
                                             block={true}
                                             handleClick={addNewLink}
                                             disabled={
-                                                isLoading || isSavingLinks
+                                                isSocialLinksLoading ||
+                                                isSavingLinks
                                             }
                                         />
                                     </Form.Item>
 
-                                    {isLoading ? (
+                                    {isSocialLinksLoading ? (
                                         <Flex vertical={true} gap={'16px'}>
                                             <BlockSkeleton height={'100px'} />
                                             <BlockSkeleton height={'100px'} />
@@ -168,7 +169,7 @@ function LinkForm({ isLoading, links, setLinks }) {
                         <Button
                             type="primary"
                             loading={isSavingLinks}
-                            disabled={isLoading}
+                            disabled={isSocialLinksLoading}
                             size="large"
                             onClick={() => {
                                 form.submit();

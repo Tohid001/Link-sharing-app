@@ -1,26 +1,25 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { createSocialLinks, fetchSocialLinks } from '../services/links.service';
+import { fetchUser, updateUser } from '../services/user.service';
 import { useSession } from 'next-auth/react';
 import { message } from 'antd';
 
-export const useFetchSocialLinks = () => {
+export const useFetchUser = () => {
     const { data: session } = useSession();
     return useQuery({
-        queryKey: ['socialLinks'],
-        queryFn: () => fetchSocialLinks(session?.accessToken),
+        queryKey: ['user'],
+        queryFn: () => fetchUser(session?.accessToken),
     });
 };
 
-export const useCreateSocialLinks = () => {
+export const useUpdateUser = () => {
     const queryClient = useQueryClient();
     const { data: session } = useSession();
 
     return useMutation({
-        mutationFn: (newLinks) =>
-            createSocialLinks(newLinks, session?.accessToken),
+        mutationFn: (data) => updateUser(data, session?.accessToken),
         onSuccess: () => {
-            queryClient.invalidateQueries('socialLinks');
+            queryClient.invalidateQueries('user');
             message.success('Your changes have been successfully saved!');
         },
         onError: (error) => {

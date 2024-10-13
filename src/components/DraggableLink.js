@@ -14,7 +14,7 @@ import styled from 'styled-components';
 
 const ItemType = 'LINK';
 
-const DraggableLinkStc = styled.div`
+export const DraggableLinkStc = styled.div`
     cursor: ${({ isDragging }) => (isDragging ? 'grabbing' : 'grab')};
     opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
     padding: 16px;
@@ -24,7 +24,6 @@ const DraggableLinkStc = styled.div`
         color: ${antToken.colorTextDescription};
         margin-top: 0;
     }
-    max-height: 235px;
     .ant-select-arrow {
         color: ${antToken.colorPrimary};
     }

@@ -61,7 +61,8 @@ export const theme = {
         Upload: {
             // margin: '0',
             // padding: '0',
-            // colorText: '#000000E0',
+            colorText: '#643DFF',
+            fontSize: '32px',
             // colorTextHeading: '#000000E0',
             // colorTextDescription: '#00000073',
         },

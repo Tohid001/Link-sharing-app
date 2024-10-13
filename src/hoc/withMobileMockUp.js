@@ -3,6 +3,7 @@ import { Col, Row } from 'antd';
 import styled from 'styled-components';
 import MobileMockUp from '@/modules/Editor/components/MobileMockUp';
 import { useFetchSocialLinks } from '@/app/queries/links.query';
+import { useFetchUser } from '@/app/queries/user.query';
 
 const EditorLayoutStc = styled(Row)`
     gap: 24px;
@@ -24,17 +25,24 @@ function withMobileMockUp(Component) {
         const {
             data: { data: socialLinks = [] } = {},
             isLoading: isSocialLinksLoading,
-            isFetching: isSocialLinksFetching,
-            error,
         } = useFetchSocialLinks();
+        const { data: { data: userData = {} } = {}, isLoading: isUserLoading } =
+            useFetchUser();
 
         const [links, setLinks] = useState([]);
+        const [user, setUser] = useState({});
 
         useEffect(() => {
             if (!isSocialLinksLoading) {
                 setLinks(socialLinks);
             }
         }, [isSocialLinksLoading]);
+
+        useEffect(() => {
+            if (!isUserLoading) {
+                setUser(userData);
+            }
+        }, [isUserLoading]);
 
         return (
             <EditorLayoutStc wrap={false} align={'start'}>
@@ -51,6 +59,7 @@ function withMobileMockUp(Component) {
                         <MobileMockUp
                             isSocialLinksLoading={isSocialLinksLoading}
                             initialLinks={links}
+                            user={user}
                         />
                     </Col>
 
@@ -65,9 +74,12 @@ function withMobileMockUp(Component) {
                     >
                         <Component
                             {...props}
-                            isLoading={isSocialLinksLoading}
+                            isSocialLinksLoading={isSocialLinksLoading}
+                            isUserLoading={isUserLoading}
                             links={links}
+                            user={user}
                             setLinks={setLinks}
+                            setUser={setUser}
                         />
                     </Col>
                 </>

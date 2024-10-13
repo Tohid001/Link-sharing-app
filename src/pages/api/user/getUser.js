@@ -24,7 +24,13 @@ export default async function handler(req, res) {
         if (!user) return res.status(404).json({ error: 'User not found' });
 
         res.status(200).json({
-            data: user?.socialLinks || [],
+            data: {
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                avatar: user.avatar,
+            },
             success: true,
         });
     } catch (error) {
