@@ -2,6 +2,7 @@ import { useCreateSocialLinks } from '@/app/queries/links.query';
 import DraggableLink from '@/components/DraggableLink';
 import ResponsiveButton from '@/components/ResponsiveButton';
 import { Typography, Button, Empty, Form, Flex } from 'antd';
+import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -112,6 +113,7 @@ function LinkForm({
                                                 ) => (
                                                     <DraggableLink
                                                         key={index}
+                                                        form={form}
                                                         index={index}
                                                         name={name}
                                                         link={{}}

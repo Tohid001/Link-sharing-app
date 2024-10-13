@@ -1,6 +1,14 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { Form, Input, Button, Select, Flex, Typography } from 'antd';
+import { Form, Input, Button, Select, Flex, Typography, Space } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faGithub,
+    faLinkedin,
+    faYoutube,
+    faFacebook,
+    faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
 import { antToken } from '@/config/antd.theme';
 import styled from 'styled-components';
 
@@ -17,15 +25,18 @@ const DraggableLinkStc = styled.div`
         margin-top: 0;
     }
     max-height: 235px;
+    .ant-select-arrow {
+        color: ${antToken.colorPrimary};
+    }
 `;
 
 const DraggableLink = ({
-    link,
     index,
     name,
     removeLink,
     moveLink,
     restField,
+    form,
 }) => {
     const ref = React.useRef(null);
 
@@ -72,6 +83,66 @@ const DraggableLink = ({
         }),
     });
 
+    const options = [
+        {
+            label: (
+                <Space>
+                    <FontAwesomeIcon icon={faGithub} />
+                    GitHub
+                </Space>
+            ),
+            value: 'github',
+        },
+        {
+            label: (
+                <Space>
+                    <FontAwesomeIcon icon={faLinkedin} />
+                    LinkedIn
+                </Space>
+            ),
+            value: 'linkedin',
+        },
+        {
+            label: (
+                <Space>
+                    <FontAwesomeIcon icon={faYoutube} />
+                    YouTube
+                </Space>
+            ),
+            value: 'youtube',
+        },
+        {
+            label: (
+                <Space>
+                    <FontAwesomeIcon icon={faFacebook} />
+                    FaceBook
+                </Space>
+            ),
+
+            value: 'facebook',
+        },
+        {
+            label: (
+                <Space>
+                    <FontAwesomeIcon icon={faTwitter} />
+                    Twitter
+                </Space>
+            ),
+
+            value: 'twitter',
+        },
+    ];
+
+    const urlPatterns = {
+        github: /^(https?:\/\/)?(www\.)?github\.com\/[\w.-]+\/[\w.-]+\/?$/,
+        linkedin:
+            /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[\w\-_%]+\/?$/i,
+        youtube: /^(https?:\/\/)?(www\.)?(youtube\.com\/@[\w.-]+)$/,
+        facebook:
+            /^(https?:\/\/)?(www\.)?(facebook|fb)\.com\/(pages\/)?[\w\-\.\%]+\/?(\?[\w=&]+)?$/i,
+        twitter: /^(https?:\/\/)?(www\.)?x\.com\/[A-Za-z0-9_-]+$/,
+    };
+
     drag(drop(ref));
 
     return (
@@ -93,7 +164,6 @@ const DraggableLink = ({
                 </Button>
             </Flex>
             <Form.Item
-                {...restField}
                 label={`Platform`}
                 name={[name, 'platform']}
                 rules={[
@@ -102,23 +172,51 @@ const DraggableLink = ({
                         message: 'Missing platform',
                     },
                 ]}
+                {...restField}
             >
-                <Select placeholder="Select Platform" size="large">
-                    <Select.Option value="GitHub">GitHub</Select.Option>
-                    <Select.Option value="YouTube">YouTube</Select.Option>
-                </Select>
+                <Select
+                    placeholder="Select Platform"
+                    size="large"
+                    options={options}
+                    optionRender={(option) => option.data.label}
+                />
             </Form.Item>
 
             <Form.Item
-                {...restField}
                 label={`Link`}
                 name={[name, 'url']}
+                dependencies={[['links', name, 'platform']]}
                 rules={[
                     {
                         required: true,
                         message: 'Missing url',
                     },
+                    ({ getFieldValue }) => ({
+                        validator(_, value) {
+                            const platform = getFieldValue([
+                                'links',
+                                name,
+                                'platform',
+                            ]);
+                            const pattern = urlPatterns[platform] || '';
+
+                            if (!pattern && value) {
+                                return Promise.reject(
+                                    new Error(`Select a pattern first!`)
+                                );
+                            }
+
+                            if (!value || pattern.test(value)) {
+                                return Promise.resolve();
+                            }
+
+                            return Promise.reject(
+                                new Error(`Invalid ${platform} URL!`)
+                            );
+                        },
+                    }),
                 ]}
+                {...restField}
             >
                 <Input placeholder="Enter URL" size="large" />
             </Form.Item>
