@@ -4,7 +4,7 @@ import { DraggableLinkStc as FieldStc } from '@/components/DraggableLink';
 import { Typography, Button, Form, Flex, Input, Upload, message } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { LinkFormStc } from './LinkForm';
 import { antToken } from '@/config/antd.theme';
@@ -57,16 +57,19 @@ const ProfileFormStc = styled(LinkFormStc)`
 function ProfileForm({ isUserLoading, user, setUser }) {
     const [form] = Form.useForm();
     const avatar = Form.useWatch('avatar', form);
-    // const avatarBlobUrl = URL.createObjectURL(avatar);
+    const [avatarUrl, setAvatarUrl] = useState('');
     const { mutate: saveUser, isPending: isSavingUser } = useUpdateUser();
-
-    console.log('tohidDev001ProfileForm', { user });
 
     useEffect(() => {
         if (!isUserLoading) {
             form.setFieldsValue({ ...user });
         }
     }, [isUserLoading, user]);
+
+    useEffect(() => {
+        avatar instanceof File && setAvatarUrl(URL.createObjectURL(avatar));
+        typeof avatar === 'string' && setAvatarUrl(avatar);
+    }, [avatar]);
 
     const validateImage = (file) => {
         const isValidType =
@@ -89,8 +92,9 @@ function ProfileForm({ isUserLoading, user, setUser }) {
             }
             setUser({
                 ...user,
-                avatar: fileUrl,
+                avatar: file,
             });
+
             return true;
         };
 
@@ -98,8 +102,20 @@ function ProfileForm({ isUserLoading, user, setUser }) {
     };
 
     const handleSubmit = (values) => {
-        console.log('tohidDev001handleSubmit', { values });
-        saveUser(values);
+        if (!(avatar instanceof File)) {
+            delete values.avatar;
+        }
+        const formData = new FormData();
+
+        for (const key in values) {
+            if (values.hasOwnProperty(key)) {
+                if (values[key]) {
+                    formData.append(key, values[key]);
+                }
+            }
+        }
+
+        saveUser(formData);
     };
 
     return (
@@ -147,11 +163,11 @@ function ProfileForm({ isUserLoading, user, setUser }) {
                                         beforeUpload={validateImage}
                                     >
                                         <div className="upload-wrapper">
-                                            {avatar ? (
+                                            {avatarUrl ? (
                                                 <div className="image-preview">
                                                     <img
                                                         className="uploaded-image"
-                                                        src={avatar}
+                                                        src={avatarUrl}
                                                         alt="Profile"
                                                     />
                                                     <div className="image-overlay">

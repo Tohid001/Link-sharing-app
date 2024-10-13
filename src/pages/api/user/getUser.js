@@ -17,6 +17,9 @@ export default async function handler(req, res) {
 
     try {
         const decoded = verify(token, JWT_SECRET);
+        if (!decoded?.userId) {
+            return res.status(401).json({ error: 'Invalid Token' });
+        }
 
         await dataBaseConnection();
 
@@ -35,6 +38,8 @@ export default async function handler(req, res) {
         });
     } catch (error) {
         console.error('Error:', error);
-        return res.status(401).json({ error: 'Invalid token' });
+        return res
+            .status(500)
+            .json({ error: `Internal Server Error(${error.message})` });
     }
 }
