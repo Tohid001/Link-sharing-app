@@ -1,8 +1,8 @@
 import { useCreateSocialLinks } from '@/app/queries/links.query';
+import BlockSkeleton from '@/components/BlockSkeleton';
 import DraggableLink from '@/components/DraggableLink';
 import ResponsiveButton from '@/components/ResponsiveButton';
 import { Typography, Button, Empty, Form, Flex } from 'antd';
-import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -35,13 +35,11 @@ const LinkFormStc = styled(Flex)`
     }
 `;
 
-function LinkForm({
-    isSocialLinksLoading,
-    initialLinks = [{ platform: '', url: '1' }],
-}) {
+function LinkForm({ isLoading, initialLinks = [{ platform: '', url: '1' }] }) {
     const [links, setLinks] = useState(initialLinks);
     const [form] = Form.useForm();
-    const { mutate: saveLinks, isPending } = useCreateSocialLinks();
+    const { mutate: saveLinks, isPending: isSavingLinks } =
+        useCreateSocialLinks();
 
     useEffect(() => {
         form.setFieldsValue({ links: initialLinks });
@@ -97,10 +95,20 @@ function LinkForm({
                                             text={'+ Add New Link'}
                                             block={true}
                                             handleClick={addNewLink}
+                                            disabled={
+                                                isLoading || isSavingLinks
+                                            }
                                         />
                                     </Form.Item>
 
-                                    {links.length ? (
+                                    {isLoading ? (
+                                        <Flex vertical={true} gap={'16px'}>
+                                            <BlockSkeleton height={'100px'} />
+                                            <BlockSkeleton height={'100px'} />
+                                            <BlockSkeleton height={'100px'} />
+                                            <BlockSkeleton height={'100px'} />
+                                        </Flex>
+                                    ) : links.length ? (
                                         <Flex
                                             vertical={true}
                                             gap={'16px'}
@@ -144,7 +152,7 @@ function LinkForm({
                         <hr></hr>
                         <Button
                             type="primary"
-                            loading={isPending}
+                            loading={isSavingLinks}
                             size="large"
                             onClick={() => {
                                 form.submit();

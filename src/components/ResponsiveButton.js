@@ -29,13 +29,14 @@ export const ResponsiveButtonStc = styled(Button)`
         background: transparent;`};
 `;
 
-function ResponsiveButton({ icon, text, type, block, handleClick }) {
+function ResponsiveButton({ icon, text, type, block, handleClick, disabled }) {
     return (
         <ResponsiveButtonStc
             icon={icon}
             type={type}
             size="large"
             block={block}
+            disabled={disabled}
             onClick={() => {
                 handleClick && handleClick();
             }}
