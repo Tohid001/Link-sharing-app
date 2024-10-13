@@ -23,11 +23,8 @@ export const LinkFormStc = styled(Flex)`
         margin-top: auto;
         button {
             display: block;
-
-            @media (max-width: 576px) {
-                width: 100%;
-            }
-            @media (min-width: 577px) {
+            width: 100%;
+            @media (min-width: 768px) {
                 width: fit-content;
                 margin-left: auto;
             }

@@ -11,6 +11,16 @@ export const GlobalStyles = createGlobalStyle`
         background: #3b3b3b !important;
         color: white !important;
     }
+    .ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before{
+         content:"" !important;
+    }
+    .ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after{
+         content:"*" !important;
+         visibility: visible !important;
+    }
+    .ant-form-item-label{
+        text-align: start !important;
+    }
 `;
 
 export const toBase64 = (file) =>

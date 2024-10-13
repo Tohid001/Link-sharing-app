@@ -7,16 +7,22 @@ import { useFetchUser } from '@/app/queries/user.query';
 
 const EditorLayoutStc = styled(Row)`
     gap: 24px;
+
+    flex-wrap: wrap;
+
+    @media (min-width: 1070px) {
+        flex-wrap: nowrap;
+    }
     .mobileMockup,
     .formBox {
         background: #ffffff;
         border-radius: 10px;
+        padding: 24px;
     }
     .mobileMockup {
-        padding: 80px;
-    }
-    .formBox {
-        padding: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 `;
 
@@ -45,7 +51,7 @@ function withMobileMockUp(Component) {
         }, [isUserLoading]);
 
         return (
-            <EditorLayoutStc wrap={false} align={'start'}>
+            <EditorLayoutStc align={'start'}>
                 <>
                     <Col
                         xs={{

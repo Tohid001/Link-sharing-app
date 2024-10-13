@@ -52,6 +52,15 @@ const ProfileFormStc = styled(LinkFormStc)`
         color: #ffffff;
         ${flexCenterColumn}
     }
+
+    #avatar {
+        flex-direction: column;
+        align-items: start;
+        @media (min-width: 768px) {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
 `;
 
 function ProfileForm({ isUserLoading, user, setUser }) {
@@ -138,11 +147,11 @@ function ProfileForm({ isUserLoading, user, setUser }) {
                     colon={false}
                     onFinish={handleSubmit}
                     labelCol={{
-                        sm: { span: 24 },
+                        xs: { span: 24 },
                         md: { span: 4 },
                     }}
                     wrapperCol={{
-                        sm: { span: 24 },
+                        xs: { span: 24 },
                         md: { span: 20, offset: 4 },
                     }}
                 >
@@ -191,7 +200,7 @@ function ProfileForm({ isUserLoading, user, setUser }) {
                                             )}
                                         </div>
                                     </Upload>
-                                    <Typography.Text>
+                                    <Typography.Text className="upload-help">
                                         Image must be below 1024x1024px. Use
                                         PNG,JPG or BMP format.
                                     </Typography.Text>

@@ -21,33 +21,43 @@ function Nav() {
         <Flex align="center" justify="space-between">
             <Logo />
             <Flex align="center" justify="center">
-                <Link href={`/links`}>
-                    <ResponsiveButton
-                        icon={<FontAwesomeIcon icon={faLink} />}
-                        text={'Links'}
-                        type={
-                            pathname !== '/links' ? 'nonSelected' : 'selected'
-                        }
-                    />
-                </Link>
-                <Link href={`/profile`}>
-                    <ResponsiveButton
-                        icon={<FontAwesomeIcon icon={faUser} />}
-                        text={'Profile Details'}
-                        type={
-                            pathname !== '/profile' ? 'nonSelected' : 'selected'
-                        }
-                    />
-                </Link>
+                <Tooltip title={'Links'}>
+                    <Link href={`/links`}>
+                        <ResponsiveButton
+                            icon={<FontAwesomeIcon icon={faLink} />}
+                            text={'Links'}
+                            type={
+                                pathname !== '/links'
+                                    ? 'nonSelected'
+                                    : 'selected'
+                            }
+                        />
+                    </Link>
+                </Tooltip>
+                <Tooltip title={'Profile'}>
+                    <Link href={`/profile`}>
+                        <ResponsiveButton
+                            icon={<FontAwesomeIcon icon={faUser} />}
+                            text={'Profile Details'}
+                            type={
+                                pathname !== '/profile'
+                                    ? 'nonSelected'
+                                    : 'selected'
+                            }
+                        />
+                    </Link>
+                </Tooltip>
             </Flex>
             <Flex>
-                <Link href={`/preview`}>
-                    <ResponsiveButton
-                        icon={<FontAwesomeIcon icon={faEye} />}
-                        text={'Preview'}
-                        type="link"
-                    />
-                </Link>
+                <Tooltip title={'Preview'}>
+                    <Link href={`/preview`}>
+                        <ResponsiveButton
+                            icon={<FontAwesomeIcon icon={faEye} />}
+                            text={'Preview'}
+                            type="link"
+                        />
+                    </Link>
+                </Tooltip>
                 <Tooltip title={'Logout'}>
                     <Button
                         type="link"

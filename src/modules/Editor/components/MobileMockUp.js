@@ -8,7 +8,6 @@ const MobileMockUpStc = styled.div`
     padding: 10px;
     border: 1px solid ${antToken.colorText};
     border-radius: 50px;
-    margin: 0 auto;
     position: relative;
 
     .mobile-container {
@@ -39,7 +38,14 @@ const MobileMockUpStc = styled.div`
     }
 `;
 
-function MobileMockUp() {
+function MobileMockUp({
+    isSocialLinksLoading,
+    isUserLoading,
+    links,
+    user,
+    setLinks,
+    setUser,
+}) {
     return (
         <MobileMockUpStc>
             <div className="mobile-container">
