@@ -2,20 +2,23 @@ import { useFetchSocialLinks } from '@/app/queries/links.query';
 import React, { useEffect, useState } from 'react';
 import MobileMockUp from './components/MobileMockUp';
 import LinkForm from './components/LinkForm';
-import { Button, Col, Dropdown, Flex, Image, Input, message, Row } from 'antd';
+import { Col, Row } from 'antd';
 
 function LinksPage() {
     const {
-        data: { data: socialLinks } = {},
+        data: { data: socialLinks = [] } = {},
         isLoading: isSocialLinksLoading,
+        isFetching: isSocialLinksFetching,
         error,
     } = useFetchSocialLinks();
 
     const [links, setLinks] = useState([]);
 
     useEffect(() => {
-        socialLinks && !isSocialLinksLoading && setLinks(socialLinks);
-    }, [socialLinks, isSocialLinksLoading]);
+        if (!isSocialLinksLoading) {
+            setLinks(socialLinks);
+        }
+    }, [isSocialLinksLoading]);
 
     return (
         <Row style={{ gap: '24px' }} wrap={false} align={'start'}>
@@ -32,9 +35,10 @@ function LinksPage() {
             >
                 <MobileMockUp
                     isSocialLinksLoading={isSocialLinksLoading}
-                    links={links}
+                    initialLinks={links}
                 />
             </Col>
+
             <Col
                 // xs={{
                 //     flex: '1 1 100%',
@@ -55,8 +59,9 @@ function LinksPage() {
                 }}
             >
                 <LinkForm
-                    isSocialLinksLoading={isSocialLinksLoading}
+                    isLoading={isSocialLinksLoading}
                     links={links}
+                    setLinks={setLinks}
                 />
             </Col>
         </Row>

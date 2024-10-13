@@ -36,6 +36,7 @@ const DraggableLink = ({
     removeLink,
     moveLink,
     restField,
+    handleChange,
     form,
 }) => {
     const ref = React.useRef(null);
@@ -143,6 +144,17 @@ const DraggableLink = ({
         twitter: /^(https?:\/\/)?(www\.)?x\.com\/[A-Za-z0-9_-]+$/,
     };
 
+    const placeholderUrls = {
+        github: 'https://github.com/octocat/Hello-World',
+        linkedin: 'https://www.linkedin.com/in/johndoe/',
+        youtube: 'https://www.youtube.com/@TheMercifulServant',
+        facebook: 'https://www.facebook.com/zuck',
+        twitter: 'https://x.com/jack',
+    };
+
+    const inputPlaceholder =
+        placeholderUrls[form.getFieldValue(['links', name, 'platform'])];
+
     drag(drop(ref));
 
     return (
@@ -175,10 +187,20 @@ const DraggableLink = ({
                 {...restField}
             >
                 <Select
-                    placeholder="Select Platform"
+                    placeholder={'Select Platform'}
                     size="large"
                     options={options}
                     optionRender={(option) => option.data.label}
+                    onSelect={async (value) => {
+                        await form.validateFields([
+                            ['links', name, 'platform'],
+                        ]);
+                        handleChange({
+                            value,
+                            index: name,
+                            type: 'platform',
+                        });
+                    }}
                 />
             </Form.Item>
 
@@ -202,7 +224,7 @@ const DraggableLink = ({
 
                             if (!pattern && value) {
                                 return Promise.reject(
-                                    new Error(`Select a pattern first!`)
+                                    new Error(`Select a platform first!`)
                                 );
                             }
 
@@ -218,7 +240,17 @@ const DraggableLink = ({
                 ]}
                 {...restField}
             >
-                <Input placeholder="Enter URL" size="large" />
+                <Input
+                    placeholder={inputPlaceholder}
+                    size="large"
+                    onChange={(event) => {
+                        handleChange({
+                            value: event.target.value,
+                            index: name,
+                            type: 'url',
+                        });
+                    }}
+                />
             </Form.Item>
         </DraggableLinkStc>
     );

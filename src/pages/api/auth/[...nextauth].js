@@ -1,5 +1,3 @@
-// pages/api/auth/[...nextauth].js
-
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import jwt from 'jsonwebtoken';
@@ -85,7 +83,6 @@ export const authOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                console.log('tohidDev001jwt', { token, user });
                 return {
                     ...token,
                     accessToken: user.accessToken,

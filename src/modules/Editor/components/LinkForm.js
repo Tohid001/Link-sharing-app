@@ -3,7 +3,7 @@ import BlockSkeleton from '@/components/BlockSkeleton';
 import DraggableLink from '@/components/DraggableLink';
 import ResponsiveButton from '@/components/ResponsiveButton';
 import { Typography, Button, Empty, Form, Flex } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
@@ -35,18 +35,19 @@ const LinkFormStc = styled(Flex)`
     }
 `;
 
-function LinkForm({ isLoading, initialLinks = [{ platform: '', url: '1' }] }) {
-    const [links, setLinks] = useState(initialLinks);
+function LinkForm({ isLoading, links, setLinks }) {
     const [form] = Form.useForm();
     const { mutate: saveLinks, isPending: isSavingLinks } =
         useCreateSocialLinks();
 
     useEffect(() => {
-        form.setFieldsValue({ links: initialLinks });
-    }, []);
+        if (!isLoading) {
+            form.setFieldsValue({ links });
+        }
+    }, [isLoading, links]);
 
     const addNewLink = () => {
-        const newLink = { platform: '', url: '' };
+        const newLink = { platform: 'github', url: '' };
         setLinks([...links, newLink]);
         form.setFieldsValue({ links: [...links, newLink] });
     };
@@ -61,6 +62,17 @@ function LinkForm({ isLoading, initialLinks = [{ platform: '', url: '1' }] }) {
         const updatedLinks = [...links];
         const draggedItem = updatedLinks.splice(dragIndex, 1)[0];
         updatedLinks.splice(hoverIndex, 0, draggedItem);
+        setLinks(updatedLinks);
+        form.setFieldsValue({ links: updatedLinks });
+    };
+
+    const handleChange = ({ value, index, type }) => {
+        const updatedLinks = links.map((link, idx) => {
+            if (idx === index) {
+                link[type] = value;
+            }
+            return link;
+        });
         setLinks(updatedLinks);
         form.setFieldsValue({ links: updatedLinks });
     };
@@ -130,6 +142,9 @@ function LinkForm({ isLoading, initialLinks = [{ platform: '', url: '1' }] }) {
                                                         }
                                                         moveLink={moveLink}
                                                         restField={restField}
+                                                        handleChange={
+                                                            handleChange
+                                                        }
                                                     />
                                                 )
                                             )}
@@ -153,6 +168,7 @@ function LinkForm({ isLoading, initialLinks = [{ platform: '', url: '1' }] }) {
                         <Button
                             type="primary"
                             loading={isSavingLinks}
+                            disabled={isLoading}
                             size="large"
                             onClick={() => {
                                 form.submit();
