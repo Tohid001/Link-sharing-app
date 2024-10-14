@@ -172,10 +172,11 @@ function ScreenView({
                 className="link-group"
             >
                 {!isSocialLinksLoading
-                    ? links.map(({ platform, url }) => {
+                    ? links.map(({ platform, url, _id: id }, index) => {
                           const linkMeta = linkMetaDataByPlatform[platform];
                           return (
                               <LinkButtonStc
+                                  key={id || index}
                                   brandColor={linkMeta.color}
                                   onClick={() => {
                                       window.open(url, '_blank');
@@ -191,8 +192,9 @@ function ScreenView({
                     <>
                         {Array(5)
                             .fill()
-                            .map(() => (
+                            .map((_, index) => (
                                 <BlockSkeleton
+                                    key={index}
                                     active={isSocialLinksLoading}
                                     height={'50px'}
                                 />
