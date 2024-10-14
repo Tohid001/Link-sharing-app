@@ -4,6 +4,7 @@ import ResponsiveButton from '@/components/ResponsiveButton';
 import ScreenView from '@/components/ScreenView';
 import { antToken } from '@/config/antd.theme';
 import { Button, Flex, Layout, message } from 'antd';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
@@ -70,13 +71,9 @@ function Preview() {
         <PreviewStc>
             <Layout.Header style={{ borderRadius: '10px' }}>
                 <Flex align="center" justify="space-between">
-                    <ResponsiveButton
-                        text="Back to Editor"
-                        handleClick={() => {
-                            router.push('/');
-                        }}
-                        type="link"
-                    />
+                    <Link href="/">
+                        <ResponsiveButton text="Back to Editor" type="link" />
+                    </Link>
                     <Button
                         type="primary"
                         size="large"

@@ -1,7 +1,15 @@
-import { Button, Flex, Form, Input, Layout, message, notification } from 'antd';
+import {
+    Button,
+    Flex,
+    Form,
+    Input,
+    Layout,
+    message,
+    notification,
+    Spin,
+} from 'antd';
 import React, { useEffect, useState } from 'react';
 import { FormWithLogoStc, FooterStc } from '../auth.stc';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
@@ -38,6 +46,17 @@ function Login() {
             router.push('/');
         }
     }, [status]);
+
+    if (status === 'loading' || !status)
+        return (
+            <Flex
+                align="center"
+                justify="center"
+                style={{ minHeight: '100vh' }}
+            >
+                <Spin size="large" />
+            </Flex>
+        );
 
     return (
         <Layout.Content>

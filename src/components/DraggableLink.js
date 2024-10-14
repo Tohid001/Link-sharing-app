@@ -134,7 +134,7 @@ const DraggableLink = ({
     ];
 
     const urlPatterns = {
-        github: /^(https?:\/\/)?(www\.)?github\.com\/[\w.-]+\/[\w.-]+\/?$/,
+        github: /^(https?:\/\/)?(www\.)?github\.com\/[A-z0-9_-]+\/?$/,
         linkedin:
             /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[\w\-_%]+\/?$/i,
         youtube: /^(https?:\/\/)?(www\.)?(youtube\.com\/@[\w.-]+)$/,

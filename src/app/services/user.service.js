@@ -20,3 +20,8 @@ export const updateUser = async (data, token) => {
     });
     return res.data;
 };
+
+export const registerUSer = async (data) => {
+    const res = await axios.post('/api/auth/register', data);
+    return res.data;
+};

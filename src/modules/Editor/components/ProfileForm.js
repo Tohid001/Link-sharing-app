@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { LinkFormStc } from './LinkForm';
 import { antToken } from '@/config/antd.theme';
+import { LinkFormStc } from '@/modules/Editor';
 
 const flexCenterColumn = css`
     display: flex;

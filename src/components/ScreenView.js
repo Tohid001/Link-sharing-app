@@ -18,6 +18,7 @@ const ScreenViewStc = styled(Flex)`
     h5 {
         margin-top: 10px;
         margin-bottom: 0px;
+        text-align: center;
     }
     .ant-skeleton .title {
         height: 15px;

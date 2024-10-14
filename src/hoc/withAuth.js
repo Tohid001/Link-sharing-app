@@ -5,14 +5,13 @@ import { useRouter } from 'next/router';
 
 const withAuth = (Component) => {
     const WithAuth = (props) => {
-        const { data: session, status } = useSession();
-        const router = useRouter();
-
-        useEffect(() => {
-            if (status === 'unauthenticated') {
+        const { status } = useSession({
+            required: true,
+            onUnauthenticated() {
                 router.push('/auth/login');
-            }
-        }, [status]);
+            },
+        });
+        const router = useRouter();
 
         if (status === 'loading')
             return (
