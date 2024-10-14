@@ -99,7 +99,7 @@ function ProfileForm({ isUserLoading, user, setUser }) {
         img.src = fileUrl;
 
         img.onload = () => {
-            if (img.width > 10241 || img.height > 10241) {
+            if (img.width > 1024 || img.height > 1024) {
                 message.error('Image must be below 1024x1024px');
                 return false;
             }
