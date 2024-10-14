@@ -13,13 +13,13 @@ const EditorLayoutStc = styled(Row)`
     @media (min-width: 1070px) {
         flex-wrap: nowrap;
     }
-    .mobileMockup,
-    .formBox {
+    .mobile-mockup,
+    .form-box {
         background: #ffffff;
         border-radius: 10px;
         padding: 24px;
     }
-    .mobileMockup {
+    .mobile-mockup {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,11 +60,13 @@ function withMobileMockUp(Component) {
                         md={{
                             flex: '1 1 40%',
                         }}
-                        className="mobileMockup"
+                        className="mobile-mockup"
                     >
                         <MobileMockUp
+                            {...props}
                             isSocialLinksLoading={isSocialLinksLoading}
-                            initialLinks={links}
+                            isUserLoading={isUserLoading}
+                            links={links}
                             user={user}
                         />
                     </Col>
@@ -76,7 +78,7 @@ function withMobileMockUp(Component) {
                         md={{
                             flex: '1 1 60%',
                         }}
-                        className="formBox"
+                        className="form-box"
                     >
                         <Component
                             {...props}

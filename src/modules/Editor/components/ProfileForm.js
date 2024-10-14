@@ -17,6 +17,10 @@ const flexCenterColumn = css`
 `;
 
 const ProfileFormStc = styled(LinkFormStc)`
+    .ant-form-item-row {
+        align-items: center;
+    }
+
     .upload-wrapper {
         width: 200px;
         height: 200px;

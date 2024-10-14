@@ -1,5 +1,5 @@
+import ScreenView from '@/components/ScreenView';
 import { antToken } from '@/config/antd.theme';
-import { Flex } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -31,26 +31,32 @@ const MobileMockUpStc = styled.div`
         border-top: none;
     }
 
+    .ant-flex {
+        width: 100%;
+    }
+
     .screen {
         padding: 24px;
         padding-top: 48px;
         height: 100%;
+        width: 100%;
     }
 `;
 
-function MobileMockUp({
-    isSocialLinksLoading,
-    isUserLoading,
-    links,
-    user,
-    setLinks,
-    setUser,
-}) {
+function MobileMockUp({ isSocialLinksLoading, isUserLoading, links, user }) {
     return (
         <MobileMockUpStc>
             <div className="mobile-container">
                 <div className="notch"></div>
-                <Flex className="screen">helloasas</Flex>
+
+                <ScreenView
+                    isSocialLinksLoading={isSocialLinksLoading}
+                    isUserLoading={isUserLoading}
+                    links={links}
+                    user={user}
+                    className="screen"
+                    mobileMockUpView={true}
+                />
             </div>
         </MobileMockUpStc>
     );

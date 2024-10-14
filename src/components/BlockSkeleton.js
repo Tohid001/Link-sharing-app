@@ -1,13 +1,23 @@
 import { Skeleton } from 'antd';
 import React from 'react';
 
-function BlockSkeleton({ height }) {
+function BlockSkeleton({
+    height,
+    width,
+    active = true,
+    block = true,
+    shape = 'default',
+    size = 'large',
+    className,
+}) {
     return (
         <Skeleton.Button
-            active={true}
-            size={'large'}
-            block={'true'}
-            style={{ height }}
+            className={className}
+            active={active}
+            size={size}
+            block={block}
+            shape={shape}
+            style={{ height, width }}
         />
     );
 }
