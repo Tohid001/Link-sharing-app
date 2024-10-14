@@ -1,11 +1,14 @@
 import axios from 'axios';
 
-export const fetchUser = async (token) => {
-    const res = await axios.get('/api/user/getUser', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+export const fetchUser = async ({ token, userId, ignoreToken }) => {
+    const res = await axios.get(
+        `/api/user/getUser?userId=${ignoreToken ? userId : ''}`,
+        {
+            headers: {
+                ...(!ignoreToken && { Authorization: `Bearer ${token}` }),
+            },
+        }
+    );
     return res.data;
 };
 

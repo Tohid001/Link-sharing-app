@@ -23,6 +23,8 @@ const EditorLayoutStc = styled(Row)`
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-top: 75px;
+        padding-bottom: 75px;
     }
 `;
 

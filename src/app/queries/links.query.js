@@ -4,11 +4,16 @@ import { createSocialLinks, fetchSocialLinks } from '../services/links.service';
 import { useSession } from 'next-auth/react';
 import { message } from 'antd';
 
-export const useFetchSocialLinks = () => {
+export const useFetchSocialLinks = ({ userId } = {}) => {
     const { data: session } = useSession();
     return useQuery({
         queryKey: ['socialLinks'],
-        queryFn: () => fetchSocialLinks(session?.accessToken),
+        queryFn: () =>
+            fetchSocialLinks({
+                userId,
+                ignoreToken: Boolean(userId),
+                token: session?.accessToken,
+            }),
     });
 };
 

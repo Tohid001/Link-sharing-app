@@ -1,11 +1,14 @@
 import axios from 'axios';
 
-export const fetchSocialLinks = async (token) => {
-    const res = await axios.get('/api/socials/read', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+export const fetchSocialLinks = async ({ token, userId, ignoreToken }) => {
+    const res = await axios.get(
+        `/api/socials/read?userId=${ignoreToken ? userId : ''}`,
+        {
+            headers: {
+                ...(!ignoreToken && { Authorization: `Bearer ${token}` }),
+            },
+        }
+    );
     return res.data;
 };
 

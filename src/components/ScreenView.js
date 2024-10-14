@@ -53,6 +53,7 @@ function ScreenView({
     user,
     className,
     mobileMockUpView,
+    preview,
 }) {
     const linkMetaDataByPlatform = {
         github: {
@@ -109,7 +110,12 @@ function ScreenView({
             align={'center'}
             className={className}
         >
-            <Flex vertical={true} align={'center'} gap={'8px'}>
+            <Flex
+                vertical={true}
+                align={'center'}
+                gap={'8px'}
+                className="avatar-group"
+            >
                 {!user.avatar ? (
                     <Skeleton.Avatar
                         className="avatar"

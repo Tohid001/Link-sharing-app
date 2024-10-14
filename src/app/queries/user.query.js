@@ -4,11 +4,16 @@ import { fetchUser, updateUser } from '../services/user.service';
 import { useSession } from 'next-auth/react';
 import { message } from 'antd';
 
-export const useFetchUser = () => {
+export const useFetchUser = ({ userId } = {}) => {
     const { data: session } = useSession();
     return useQuery({
         queryKey: ['user'],
-        queryFn: () => fetchUser(session?.accessToken),
+        queryFn: () =>
+            fetchUser({
+                userId,
+                ignoreToken: Boolean(userId),
+                token: session?.accessToken,
+            }),
     });
 };
 

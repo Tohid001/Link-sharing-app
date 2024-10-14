@@ -9,13 +9,14 @@ import {
 import { Button, Flex, Tooltip } from 'antd';
 import ResponsiveButton from '@/components/ResponsiveButton';
 import Logo from './Logo';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 function Nav() {
     const router = useRouter();
     const { pathname } = router;
+    const { data: session } = useSession();
 
     return (
         <Flex align="center" justify="space-between">
@@ -50,7 +51,7 @@ function Nav() {
             </Flex>
             <Flex>
                 <Tooltip title={'Preview'}>
-                    <Link href={`/preview`}>
+                    <Link href={`/preview?userId=${session?.user?.id}`}>
                         <ResponsiveButton
                             icon={<FontAwesomeIcon icon={faEye} />}
                             text={'Preview'}
