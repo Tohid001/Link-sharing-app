@@ -29,7 +29,7 @@ const ScreenViewStc = styled(Flex)`
         width: 90px;
     }
     .link-group {
-        max-height: 320px;
+        max-height: 70%;
         overflow-y: auto;
     }
 `;

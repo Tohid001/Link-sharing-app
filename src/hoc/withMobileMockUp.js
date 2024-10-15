@@ -10,6 +10,8 @@ const EditorLayoutStc = styled(Row)`
 
     flex-wrap: wrap;
 
+    height: 100%;
+
     @media (min-width: 1070px) {
         flex-wrap: nowrap;
     }

@@ -6,19 +6,18 @@ Row;
 const withNav = (Component) => {
     const withNav = (props) => {
         return (
-            <Row gutter={[24, 24]}>
+            <Row gutter={[24, 24]} style={{ flex: '1 1 100%' }}>
                 <Col span={24}>
-                    <Layout.Header style={{ borderRadius: '10px' }}>
+                    <Layout.Header
+                        style={{ borderRadius: '10px', height: '100%' }}
+                    >
                         <Nav />
                     </Layout.Header>
                 </Col>
-                <Layout.Content
-                    style={{ display: 'grid', gridTemplateRows: 'auto 1fr' }}
-                >
-                    <Col span={24}>
-                        <Component {...props} />
-                    </Col>
-                </Layout.Content>
+
+                <Col span={24}>
+                    <Component {...props} />
+                </Col>
             </Row>
         );
     };

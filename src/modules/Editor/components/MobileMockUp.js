@@ -4,7 +4,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const MobileMockUpStc = styled.div`
-    width: 300px;
+    width: 350px;
+
     padding: 10px;
     border: 1px solid ${antToken.colorText};
     border-radius: 50px;
@@ -12,7 +13,8 @@ const MobileMockUpStc = styled.div`
 
     .mobile-container {
         width: 100%;
-        height: 600px;
+        min-height: 600px;
+        height: 78vh;
         border: inherit;
         border-radius: inherit;
         position: relative;

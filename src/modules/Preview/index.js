@@ -4,7 +4,6 @@ import ResponsiveButton from '@/components/ResponsiveButton';
 import ScreenView from '@/components/ScreenView';
 import { antToken } from '@/config/antd.theme';
 import { Button, Flex, Layout, message } from 'antd';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
@@ -13,6 +12,14 @@ const PreviewStc = styled.div`
     height: 100vh;
     overflow: hidden;
     position: relative;
+
+    .preview-nav {
+        button {
+            @media (max-width: 768px) {
+                width: 50%;
+            }
+        }
+    }
 
     @media (max-width: 768px) {
         position: fixed;
@@ -25,7 +32,7 @@ const PreviewStc = styled.div`
     }
     &::before {
         background: ${antToken.colorPrimary};
-        height: 350px;
+        height: 450px;
         border-radius: 0px 0px 30px 30px;
         content: '';
         display: block;
@@ -36,9 +43,6 @@ const PreviewStc = styled.div`
         visibility: hidden;
         @media (min-width: 768px) {
             visibility: visible;
-        }
-        @media (min-width: 768px) and (max-width: 1366px) {
-            height: 400px;
         }
     }
     .screen {
@@ -70,10 +74,20 @@ function Preview() {
     return (
         <PreviewStc>
             <Layout.Header style={{ borderRadius: '10px' }}>
-                <Flex align="center" justify="space-between">
-                    <Link href="/">
-                        <ResponsiveButton text="Back to Editor" type="link" />
-                    </Link>
+                <Flex
+                    align="center"
+                    justify="space-between"
+                    gap={'16px'}
+                    className="preview-nav"
+                >
+                    <ResponsiveButton
+                        text="Back to Editor"
+                        type="link"
+                        handleClick={() => {
+                            router.push('/');
+                        }}
+                    />
+
                     <Button
                         type="primary"
                         size="large"

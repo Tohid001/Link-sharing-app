@@ -11,7 +11,7 @@ import styled from 'styled-components';
 export const LinkFormStc = styled(Flex)`
     min-height: 100%;
     .scrollable {
-        max-height: 467px;
+        max-height: 61vh;
         overflow-y: auto;
         overflow-x: hidden;
     }
