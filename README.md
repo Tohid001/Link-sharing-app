@@ -1,12 +1,12 @@
 
 1. ## Prerequisite
 
-   Node js version **v18.17.0** must be installed.
+   Node js version **v18.17.0** must be installed. Use **nvm**(https://github.com/nvm-sh/nvm) to switch node versions in the working directory
 
 2. ## Clone the repo
 
 3. ## Copy env variables
-   Copy the env variables from **.env.example** file, create another file named as **.env.local** at the root dirrctory of the repo, and paste the env variables into it.
+   Copy the env variables from **.env.example** file, create another file named **.env.local** at the repo's root directory and paste the env variables into it.
 
 4. ## Run the command 
    **npm install**
