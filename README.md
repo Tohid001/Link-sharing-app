@@ -1,4 +1,7 @@
 
+0. ## Video Guideline
+   Watch this [Video](https://s.10m.io/v/1VG54V2u0JwNdCar0Xc4) for a quick overview
+
 1. ## Prerequisite
 
    Node js version **v18.17.0** must be installed. Use **nvm**(https://github.com/nvm-sh/nvm) to switch node versions in the working directory
@@ -18,3 +21,4 @@
     ```
 
    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
