@@ -121,7 +121,7 @@ function ProfileForm({ isUserLoading, user, setUser }) {
         const formData = new FormData();
 
         for (const key in values) {
-            if (values.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(values, key)) {
                 if (values[key]) {
                     formData.append(key, values[key]);
                 }

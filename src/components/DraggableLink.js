@@ -139,7 +139,7 @@ const DraggableLink = ({
             /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[\w\-_%]+\/?$/i,
         youtube: /^(https?:\/\/)?(www\.)?(youtube\.com\/@[\w.-]+)$/,
         facebook:
-            /^(https?:\/\/)?(www\.)?(facebook|fb)\.com\/(pages\/)?[\w\-\.\%]+\/?(\?[\w=&]+)?$/i,
+            /^(https?:\/\/)?(www\.)?(facebook|fb)\.com\/(pages\/)?[\w\-.%]+\/?(\?[\w=&]+)?$/i,
         twitter: /^(https?:\/\/)?(www\.)?x\.com\/[A-Za-z0-9_-]+$/,
     };
 

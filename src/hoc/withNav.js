@@ -3,8 +3,8 @@ import Nav from '@/modules/Editor/components/Nav';
 
 Row;
 
-const withNav = (Component) => {
-    const withNav = (props) => {
+const WithNav = (Component) => {
+    const WithNav = (props) => {
         return (
             <Row gutter={[24, 24]} style={{ flex: '1 1 100%' }}>
                 <Col span={24}>
@@ -22,7 +22,7 @@ const withNav = (Component) => {
         );
     };
 
-    return withNav;
+    return WithNav;
 };
 
-export default withNav;
+export default WithNav;

@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Flex, Spin } from 'antd';
 import { useRouter } from 'next/router';
 
-const withAuth = (Component) => {
+const WithAuth = (Component) => {
     const WithAuth = (props) => {
         const { status } = useSession({
             required: true,
@@ -29,4 +28,4 @@ const withAuth = (Component) => {
     return WithAuth;
 };
 
-export default withAuth;
+export default WithAuth;

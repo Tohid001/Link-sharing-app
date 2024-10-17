@@ -30,8 +30,8 @@ const EditorLayoutStc = styled(Row)`
     }
 `;
 
-function withMobileMockUp(Component) {
-    const withMobileMockUp = (props) => {
+function WithMobileMockUp(Component) {
+    const WithMobileMockUp = (props) => {
         const {
             data: { data: socialLinks = [] } = {},
             isLoading: isSocialLinksLoading,
@@ -98,7 +98,7 @@ function withMobileMockUp(Component) {
             </EditorLayoutStc>
         );
     };
-    return withMobileMockUp;
+    return WithMobileMockUp;
 }
 
-export default withMobileMockUp;
+export default WithMobileMockUp;

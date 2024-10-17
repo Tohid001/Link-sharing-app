@@ -15,13 +15,13 @@ const PreviewStc = styled.div`
 
     .preview-nav {
         button {
-            @media (max-width: 768px) {
+            @media (max-width: 767px) {
                 width: 50%;
             }
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         position: fixed;
         inset: 0;
         background: #ffffff;
@@ -32,7 +32,7 @@ const PreviewStc = styled.div`
     }
     &::before {
         background: ${antToken.colorPrimary};
-        height: 450px;
+        height: 350px;
         border-radius: 0px 0px 30px 30px;
         content: '';
         display: block;
@@ -44,10 +44,13 @@ const PreviewStc = styled.div`
         @media (min-width: 768px) {
             visibility: visible;
         }
+        @media (min-width: 1440px) {
+            height: 400px;
+        }
     }
     .screen {
         padding: 24px;
-        height: 500px;
+        height: 425px;
         width: 300px;
         position: absolute;
         top: 50%;
