@@ -4,7 +4,7 @@
 
 1. ## Prerequisite
 
-   Node js version **v18.17.0** must be installed. Use **nvm**(https://github.com/nvm-sh/nvm) to switch node versions in the working directory
+   Node js version **v18.17.0** must be installed at least. Use **nvm**(https://github.com/nvm-sh/nvm) to switch node versions in the working directory
 
 2. ## Clone the repo
 
