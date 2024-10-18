@@ -33,6 +33,29 @@ function SignUp() {
             </Flex>
         );
 
+    const passwordRules = [
+        {
+            required: true,
+            message: 'Password is required!',
+        },
+        {
+            min: 8,
+            message: 'Password must be at least 8 characters long!',
+        },
+        {
+            pattern: /(?=.*\d)/,
+            message: 'Password must contain at least one number!',
+        },
+        {
+            pattern: /(?=.*[A-Z])/,
+            message: 'Password must contain at least one uppercase letter!',
+        },
+        {
+            pattern: /(?=.*[a-z])/,
+            message: 'Password must contain at least one lowercase letter!',
+        },
+    ];
+
     return (
         <Layout.Content>
             <Flex
@@ -98,12 +121,7 @@ function SignUp() {
                         <Form.Item
                             name="password"
                             label="Password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Password is required!',
-                                },
-                            ]}
+                            rules={passwordRules} // Updated validation rules
                         >
                             <Input.Password
                                 placeholder="Type your password"
@@ -113,6 +131,7 @@ function SignUp() {
                         <Form.Item
                             name="confirm"
                             label="Confirm Password"
+                            dependencies={['password']}
                             rules={[
                                 {
                                     required: true,
